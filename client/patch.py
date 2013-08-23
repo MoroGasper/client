@@ -192,7 +192,7 @@ class GitWorker(BasicPatchWorker):
     def create_repo(self):
         p = self.source.basepath
         if not os.path.exists(p):
-            os.mkdir(p)
+            os.makedirs(p)
         return Repo.init_bare(p)
 
     def fetch(self, repo):
@@ -1349,7 +1349,7 @@ def init():
     # delete useless repos
     for extern in os.listdir(settings.external_plugins):
         if extern not in sources or not sources[extern].enabled:
-            path = os.path.join(settings.external_plugins)
+            path = os.path.join(settings.external_plugins, extern)
             if os.path.isdir(path) and not os.path.exists(os.path.join(path, '.git')):
                 log.info('deleting useless external repo {}'.format(path))
                 try:
